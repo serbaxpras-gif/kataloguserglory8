@@ -1,0 +1,25 @@
+
+name: Publish Katalog G8Y
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil file katalog
+        uses: actions/checkout@v4
+
+      - name: Cek secret
+        env:
+          G8Y_TOKEN: ${{ secrets.G8Y_TOKEN }}
+        run: |
+          if [ -z "$G8Y_TOKEN" ]; then
+            echo "Secret G8Y_TOKEN belum diatur."
+            exit 1
+          fi
+          echo "Secret G8Y_TOKEN tersedia."
